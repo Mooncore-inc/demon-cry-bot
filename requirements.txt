@@ -1,2 +1,2 @@
 aiogram
-httpx
+demon-cry-python-sdk
