@@ -1,0 +1,14 @@
+services:
+  bot:
+    build: .
+    container_name: demon-cry-bot
+    restart: unless-stopped
+    volumes:
+      - ./config.json:/app/config.json:ro,z
+    networks:
+      - demon-cry-net
+
+networks:
+  demon-cry-net:
+    external: true
+    name: "demon-cry_default"
