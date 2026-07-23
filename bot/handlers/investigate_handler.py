@@ -4,6 +4,7 @@ from collections import Counter
 import httpx
 from aiogram import Router
 from aiogram.types import Message
+from demon_cry_python_sdk import DemonCryClient
 
 from bot.config import config
 
@@ -27,9 +28,9 @@ def _build_footer(tools_used: list[dict], total_tokens: int) -> str:
     return "\n".join(parts) if parts else ""
 
 
-def _build_response(data: dict) -> str:
-    result = data.get("result") or ""
-    footer = _build_footer(data.get("tools_used", []), data.get("total_tokens", 0))
+def _build_response(resp) -> str:
+    result = resp.result or ""
+    footer = _build_footer(resp.tools_used, resp.total_tokens)
 
     if footer:
         return f"{result}\n\n——————————\n{footer}"
@@ -45,16 +46,10 @@ async def investigate_handler(message: Message) -> None:
     status_msg = await message.answer("_Расследование запущено..._")
 
     try:
-        async with httpx.AsyncClient() as client:
-            resp = await client.post(
-                f"{config.api_url}/api/investigate",
-                json={"target": target, "max_tokens": config.max_tokens},
-                timeout=120.0,
-            )
-            resp.raise_for_status()
+        async with DemonCryClient(config.api_url) as client:
+            resp = await client.investigate(target, config.max_tokens)
 
-        data = resp.json()
-        await status_msg.edit_text(_build_response(data), parse_mode="HTML")
+        await status_msg.edit_text(_build_response(resp), parse_mode="HTML")
 
     except httpx.HTTPStatusError as e:
         logger.error("API error %s: %s", e.response.status_code, e.response.text)
