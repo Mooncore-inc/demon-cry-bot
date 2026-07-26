@@ -46,8 +46,8 @@ async def investigate_handler(message: Message) -> None:
     status_msg = await message.answer("_Расследование запущено..._")
 
     try:
-        async with DemonCryClient(config.api_url) as client:
-            resp = await client.investigate(target, config.max_tokens)
+        async with DemonCryClient(base_url=config.api_url, api_key=config.api_key) as client:
+            resp = await client.investigations.create(target, config.max_tokens)
 
         await status_msg.edit_text(_build_response(resp), parse_mode="HTML")
 
