@@ -7,6 +7,7 @@ import json
 class Config:
     bot_token: str
     api_url: str
+    api_key: str
     max_tokens: int = 10000
 
     def __init__(self, config_file_path) -> None:
