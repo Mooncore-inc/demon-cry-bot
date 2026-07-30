@@ -47,7 +47,7 @@ async def investigate_handler(message: Message) -> None:
 
     try:
         async with DemonCryClient(base_url=config.api_url, api_key=config.api_key) as client:
-            resp = await client.investigations.create(target, config.max_tokens)
+            resp = await client.investigations.create(target)
 
         await status_msg.edit_text(_build_response(resp), parse_mode="HTML")
 

@@ -1,6 +1,5 @@
 {
     "bot_token": "000000000:aaaaaaabbbbbbb...",
     "api_url": "http://localhost:8000",
-    "api_key": "",
-    "max_tokens": 10000
+    "api_key": ""
 }
