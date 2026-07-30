@@ -38,8 +38,7 @@ cp example_config.json config.json
 ```json
 {
     "bot_token": "YOUR_TELEGRAM_BOT_TOKEN",
-    "api_url": "http://localhost:8000",
-    "max_tokens": 10000
+    "api_url": "http://localhost:8000"
 }
 ```
 
@@ -47,7 +46,6 @@ cp example_config.json config.json
 |------|----------|
 | `bot_token` | Токен Telegram-бота (от [@BotFather](https://t.me/BotFather)) |
 | `api_url` | URL Demon Cry API (без `/api/investigate`) |
-| `max_tokens` | Максимум токенов на одно расследование |
 
 Запуск:
 ```bash
